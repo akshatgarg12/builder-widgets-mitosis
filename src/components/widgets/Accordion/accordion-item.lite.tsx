@@ -1,4 +1,5 @@
 import {  Show, useStore } from "@builder.io/mitosis"
+// these elements needs to be migrated from @builder.io/sdks
 import { BuilderElement } from "../../../types/element"
 import RenderBlocks from "../../render-blocks.lite"
 

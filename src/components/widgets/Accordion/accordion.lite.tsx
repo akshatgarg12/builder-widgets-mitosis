@@ -9,8 +9,8 @@ interface AccordionProps {
     }[]
     oneAtATime?: boolean
     grid?: boolean
-    defaultOpen?: any
-    builderBlock?: BuilderElement
+    defaultOpen?: any // does not exist in accordion.config
+    builderBlock?: BuilderElement // does not exist in accordion.config
     // TODO: gridRowWidth
     gridRowWidth?: number
     useChildrenForItems?: boolean
@@ -25,57 +25,57 @@ export interface AccordionState {
 
 export default function Accordion(props: AccordionProps) {
     const state = useStore<AccordionState>({
-        open: props.defaultOpen, 
+        open: [], 
         onlyOneAtATime : Boolean(props.grid || props.oneAtATime),
         getOpenGridItemPosition: props.grid && open.length,
         openGridItemOrder: null,
     })
 
-    if (state.getOpenGridItemPosition) {
-        const openItemIndex = state.open[0]
-        const openItem = document.querySelector(
-            `.builder-accordion-title[data-index="${openItemIndex}"]`
-        )
+    // if (state.getOpenGridItemPosition) {
+    //     const openItemIndex = state.open[0]
+    //     const openItem = document.querySelector(
+    //         `.builder-accordion-title[data-index="${openItemIndex}"]`
+    //     )
 
-        let subjectItem = openItem
-        state.openGridItemOrder = openItemIndex
+    //     let subjectItem = openItem
+    //     state.openGridItemOrder = openItemIndex
 
-        if (subjectItem) {
-            let prevItemRect = subjectItem.getBoundingClientRect()
+    //     if (subjectItem) {
+    //         let prevItemRect = subjectItem.getBoundingClientRect()
 
-            while (
-                (subjectItem = subjectItem && subjectItem.nextElementSibling)
-            ) {
-                if (subjectItem) {
-                    if (
-                        subjectItem.classList.contains(
-                            'builder-accordion-detail'
-                        )
-                    ) {
-                        continue
-                    }
-                    const subjectItemRect = subjectItem.getBoundingClientRect()
-                    if (subjectItemRect.left > prevItemRect.left) {
-                        const index = parseInt(
-                            subjectItem.getAttribute('data-index') || '',
-                            10
-                        )
-                        if (!isNaN(index)) {
-                            prevItemRect = subjectItemRect
-                            // @ts-ignore
-                            state.openGridItemOrder = index
-                        }
-                    } else {
-                        break
-                    }
-                }
-            }
-        }
-    }
+    //         while (
+    //             (subjectItem = subjectItem && subjectItem.nextElementSibling)
+    //         ) {
+    //             if (subjectItem) {
+    //                 if (
+    //                     subjectItem.classList.contains(
+    //                         'builder-accordion-detail'
+    //                     )
+    //                 ) {
+    //                     continue
+    //                 }
+    //                 const subjectItemRect = subjectItem.getBoundingClientRect()
+    //                 if (subjectItemRect.left > prevItemRect.left) {
+    //                     const index = parseInt(
+    //                         subjectItem.getAttribute('data-index') || '',
+    //                         10
+    //                     )
+    //                     if (!isNaN(index)) {
+    //                         prevItemRect = subjectItemRect
+    //                         // @ts-ignore
+    //                         state.openGridItemOrder = index
+    //                     }
+    //                 } else {
+    //                     break
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
-    if (typeof state.openGridItemOrder === 'number') {
-        state.openGridItemOrder = state.openGridItemOrder + 1
-    }
+    // if (typeof state.openGridItemOrder === 'number') {
+    //     state.openGridItemOrder = state.openGridItemOrder + 1
+    // }
 
     return (
         <div

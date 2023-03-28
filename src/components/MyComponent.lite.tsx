@@ -1,18 +1,18 @@
-// src/components/MyComponent.lite.tsx
-import { useStore } from '@builder.io/mitosis';
+import { useStore, Show, For } from "@builder.io/mitosis";
 
-type Props = {
-  message: string;
-};
-
-export default function MyBasicComponent(props: Props) {
+export default function MyComponent(props) {
   const state = useStore({
-    name: 'Foo',
-  });
-
+    numbers : [1,2,3,4,5],
+    vowels : ['a', 'e', 'i', 'o', 'u'],
+    getAccordionItem : () => <h1>Accordion Item</h1>
+  })
   return (
     <div>
-      {props.message || 'Hello'} {state.name}! I can run in React, Vue, Solid or Svelte!
+      <Show when={state.numbers && state.numbers.length}>
+        <For each={state.numbers}>
+          {(number) => <h1>number : {state.getAccordionItem()} {number}</h1>}
+        </For>
+      </Show>
     </div>
   );
 }
